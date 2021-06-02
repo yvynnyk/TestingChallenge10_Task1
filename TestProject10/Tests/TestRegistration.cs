@@ -1,5 +1,6 @@
 using NUnit.Framework;
 using TestProject10.Framework;
+using TestProject10.Pages;
 
 namespace TestProject10.Tests
 {
@@ -28,6 +29,13 @@ namespace TestProject10.Tests
                 Assert.That(userFirstName, Is.EqualTo(registrationPage.GetFirstNameFromTable()));
                 Assert.That(userLastName, Is.EqualTo(registrationPage.GetLastNameFromTable()));
             });
+
+            PageLogin loginPage = registrationPage.GoToLoginPage();
+
+            PageHome homePage = loginPage.Login(userName, userPassword);
+
+            Assert.That("Wellcome To Your Personal Road Assitance", Is.EqualTo(homePage.GetHeader()));
+
         }
 
     }
