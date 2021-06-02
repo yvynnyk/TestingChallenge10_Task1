@@ -10,34 +10,28 @@ namespace TestProject10.Tests
         [TestCaseSource(typeof(User), nameof(User.GetUsersFromCSVFile))]
         public void TestRegistration(string userInfo)
         {
-            var userCredentials = userInfo.Split(",");
-            var userName = userCredentials[0];
-            var userPassword = userCredentials[1];
-            var userFirstName = userCredentials[2];
-            var userLastName = userCredentials[3];
-
-            Logger.Info($"Registration of user {userName} started");
-
-            registrationPage.RegisterUser(userName, userPassword, userFirstName, userLastName);
+            User user = new User(userInfo.Split(","));
             
-            Logger.Info($"Check if {userName} appears in DB");
+            Logger.Info($"Registration of user {user.Name} started");
+            
+            registrationPage.RegisterUser(user.Name, user.Password, user.FirstName, user.LastName);
+            
+            Logger.Info($"Check if {user.Name} appears in DB");
             
             Assert.Multiple(() =>
             {
-                Assert.That(userName, Is.EqualTo(registrationPage.GetNameFromTable()));
-                Assert.That(userPassword, Is.EqualTo(registrationPage.GetPasswordFromTable()));
-                Assert.That(userFirstName, Is.EqualTo(registrationPage.GetFirstNameFromTable()));
-                Assert.That(userLastName, Is.EqualTo(registrationPage.GetLastNameFromTable()));
+                Assert.That(user.Name, Is.EqualTo(registrationPage.GetNameFromTable()));
+                Assert.That(user.Password, Is.EqualTo(registrationPage.GetPasswordFromTable()));
+                Assert.That(user.FirstName, Is.EqualTo(registrationPage.GetFirstNameFromTable()));
+                Assert.That(user.LastName, Is.EqualTo(registrationPage.GetLastNameFromTable()));
             });
 
-            PageLogin loginPage = registrationPage.GoToLoginPage();
+            Logger.Info($"Logging of user {user.Name} started");
 
-            PageHome homePage = loginPage.Login(userName, userPassword);
+            PageHome homePage = registrationPage.GoToLoginPage().Login(user.Name, user.Password);
 
-            Assert.That("Wellcome To Your Personal Road Assitance", Is.EqualTo(homePage.GetHeader()));
-
+            Assert.That("Wellcome To Your Personal Road Assitance", Is.EqualTo(homePage.GetHeader()));            
         }
-
     }
 }
         

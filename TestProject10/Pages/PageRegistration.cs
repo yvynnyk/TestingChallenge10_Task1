@@ -9,24 +9,23 @@ namespace TestProject10.Pages
         public PageRegistration(IWebDriver driver) : base(driver)
         {
         }
-        private IWebElement usernameInput => Driver.FindElement(By.XPath("//input[@name='username']"));
-        private IWebElement passwordInput => Driver.FindElement(By.XPath("//input[@name='password']"));
-        private IWebElement fistNameInput => Driver.FindElement(By.XPath("//input[@name='firstname']"));
-        private IWebElement lastNameInput => Driver.FindElement(By.XPath("//input[@name='lastname']"));
-        private IWebElement submitButton => Driver.FindElement(By.XPath("//input[@type='submit']"));
-
+        private IWebElement UsernameInput => Driver.FindElement(By.XPath("//input[@name='username']"));
+        private IWebElement PasswordInput => Driver.FindElement(By.XPath("//input[@name='password']"));
+        private IWebElement FistNameInput => Driver.FindElement(By.XPath("//input[@name='firstname']"));
+        private IWebElement LastNameInput => Driver.FindElement(By.XPath("//input[@name='lastname']"));
+        private IWebElement SubmitButton => Driver.FindElement(By.XPath("//input[@type='submit']"));
         public PageRegistration RegisterUser(string userName, string userPassword, string firstName, string lastName)
         {
-                usernameInput.SendKeys(userName);
-                passwordInput.SendKeys(userPassword);
-                fistNameInput.SendKeys(firstName);
-                lastNameInput.SendKeys(lastName);
-                submitButton.Click();
+                UsernameInput.SendKeys(userName);
+                PasswordInput.SendKeys(userPassword);
+                FistNameInput.SendKeys(firstName);
+                LastNameInput.SendKeys(lastName);
+                SubmitButton.Click();
             return new PageRegistration(Driver);
         }
-        private WebDriverWait wait => new WebDriverWait(Driver, TimeSpan.FromSeconds(5));
-        private IWebElement table => wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementIsVisible(By.TagName("tbody")));
-        private int Rows => table.FindElements(By.TagName("tr")).Count;
+        private WebDriverWait Wait => new WebDriverWait(Driver, TimeSpan.FromSeconds(5));
+        private IWebElement Table => Wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementIsVisible(By.TagName("tbody")));
+        private int Rows => Table.FindElements(By.TagName("tr")).Count;
         public string GetNameFromTable()
         {
             return Driver.FindElement(By.XPath($"//tbody//tr[{Rows}]//th[2]")).Text;
@@ -43,7 +42,6 @@ namespace TestProject10.Pages
         {
             return Driver.FindElement(By.XPath($"//tbody//tr[{Rows}]//th[5]")).Text;
         }
-
         public IWebElement ApplicationLink => Driver.FindElement(By.XPath("//a[text()='link']"));
         public PageLogin GoToLoginPage()
         {

@@ -10,6 +10,5 @@ namespace TestProject10.Framework
             driver.Navigate().GoToUrl("http://testingchallenges.thetestingmap.org/challenge10.php");
             return new PageRegistration(driver);
         }
-
     }
 }

@@ -8,11 +8,9 @@ namespace TestProject10.Pages
         { 
         }
         private IWebElement Header => Driver.FindElement(By.TagName("h1"));
-
         public string GetHeader()
         {
             return Header.Text;
         }
-
     }
 }

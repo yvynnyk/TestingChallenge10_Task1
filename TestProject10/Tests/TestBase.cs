@@ -4,9 +4,6 @@ using OpenQA.Selenium;
 using TestProject10.Framework;
 using TestProject10.Pages;
 using log4net;
-using NUnit.Framework.Interfaces;
-using System.IO;
-using System;
 
 namespace TestProject10.Tests
 {
@@ -16,7 +13,6 @@ namespace TestProject10.Tests
         protected PageRegistration registrationPage;
         protected ILog Logger;
 
-        //[OneTimeSetUp]
         [SetUp]
         public void Setup()
         {
@@ -28,19 +24,10 @@ namespace TestProject10.Tests
         }
 
         [TearDown]
-        public void TakeScreenShoot()
-        {
-            if (TestContext.CurrentContext.Result.Outcome != ResultState.Success)
-            {
-                var screenshot = ((ITakesScreenshot)Driver).GetScreenshot();
-                string screenName = DateTime.Now.ToString("yyyy-MM-dd-HH_mm_ss");
-                string screenShotFileName = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Screenshots") + screenName + ".png";
-                screenshot.SaveAsFile(screenShotFileName, ScreenshotImageFormat.Png);
-            }
-        }
-        [TearDown]
         public void Cleanup()
         {
+            ScreenShot.Take(Driver);
+            Logger.Info("Test done");
             Driver.Quit();
         }
     }
