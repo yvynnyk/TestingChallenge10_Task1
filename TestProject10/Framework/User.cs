@@ -16,10 +16,16 @@ namespace TestProject10.Framework
             FirstName = user[2];
             LastName = user[3];
         }
-        public static string[] GetUsersFromCSVFile()
+        public static User [] GetUsersFromCSVFile()
         {
-            string[] lines = File.ReadAllLines(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Resources/NewUsers.csv"));        
-            return lines;
+            string[] lines = File.ReadAllLines(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Resources/NewUsers.csv"));
+            User[] users = new User[lines.Length];
+            for (int i = 0; i < lines.Length; i++)
+            {
+                users[i] = new User(lines[i].Split(","));
+            }
+            
+            return users;
         }
     }
 }

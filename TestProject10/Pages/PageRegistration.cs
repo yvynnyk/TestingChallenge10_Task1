@@ -43,11 +43,6 @@ namespace TestProject10.Pages
             return Driver.FindElement(By.XPath($"//tbody//tr[{Rows}]//th[5]")).Text;
         }
         public IWebElement ApplicationLink => Driver.FindElement(By.XPath("//a[text()='link']"));
-        public PageLogin GoToLoginPage()
-        {
-            ApplicationLink.Click();
-            return new PageLogin(Driver);
-        }
 
     }
 }

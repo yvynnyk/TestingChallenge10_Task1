@@ -12,9 +12,9 @@ namespace TestProject10.Pages
         IWebElement UserName => Wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementIsVisible(By.XPath("//input[@name='username']")));
         IWebElement UserPassword => Driver.FindElement(By.XPath("//input[@name='password']"));
         IWebElement ButtonLogin => Driver.FindElement(By.XPath("//button[@type='submit']"));
+        
         public PageHome Login(string name, string password)
         {
-            Driver.SwitchTo().Window(Driver.WindowHandles[1]);
             UserName.SendKeys(name);
             UserPassword.SendKeys(password);
             ButtonLogin.Click();
