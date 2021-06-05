@@ -19,18 +19,17 @@ namespace TestProject10.Tests
             
             Assert.Multiple(() =>
             {
-                Assert.That(user.Name, Is.EqualTo(registrationPage.GetNameFromTable()));
-                Assert.That(user.Password, Is.EqualTo(registrationPage.GetPasswordFromTable()));
-                Assert.That(user.FirstName, Is.EqualTo(registrationPage.GetFirstNameFromTable()));
-                Assert.That(user.LastName, Is.EqualTo(registrationPage.GetLastNameFromTable()));
+                Assert.That(user.Name, Is.EqualTo(registrationPage.GetNameFromTable()), $"Name in the table is not equal to the registered name: ${user.Name}");
+                Assert.That(user.Password, Is.EqualTo(registrationPage.GetPasswordFromTable()), $"Password in the table is not equal to the registered password: ${user.Password}");
+                Assert.That(user.FirstName, Is.EqualTo(registrationPage.GetFirstNameFromTable()), $"First name in the table is not equal to the registered first name: ${user.FirstName}");
+                Assert.That(user.LastName, Is.EqualTo(registrationPage.GetLastNameFromTable()), $"Last name in the table is not equal to the registered name: ${user.LastName}");
             });
 
             Logger.Info($"Logging of user {user.Name} started");
 
-            //PageHome homePage = registrationPage.GoToLoginPage().Login(user.Name, user.Password);
             PageHome homePage = SiteNavigator.NavigateToLoginPage(Driver, registrationPage.ApplicationLink).Login(user.Name, user.Password);
 
-            Assert.That("Wellcome To Your Personal Road Assitance", Is.EqualTo(homePage.GetHeader()));            
+            Assert.That("Wellcome To Your Personal Road Assitance", Is.EqualTo(homePage.GetHeader()), "Login was not successful. Main page was not displayed");            
         }
     }
 }
